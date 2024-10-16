@@ -87,14 +87,16 @@ export function usePokemon() {
 
         if (selectedType) {
           const typeData = await fetchPokemonsByType(selectedType);
-          filteredPokemon = typeData.results;
+          const startIndex =
+            (pagination.currentPage - 1) * pagination.itemsPerPage;
+          const endIndex = startIndex + pagination.itemsPerPage;
+          filteredPokemon = typeData.results.slice(startIndex, endIndex);
           setPagination((prev) => ({
             ...prev,
             totalItems: typeData.results.length,
             totalPages: Math.ceil(
               typeData.results.length / pagination.itemsPerPage
             ),
-            currentPage: 1,
           }));
         } else {
           const data = await fetchPokemonList(
