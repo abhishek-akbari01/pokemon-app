@@ -34,6 +34,7 @@ export default function Home() {
         onTypeChange={(type) => {
           setSelectedType(type);
           setPage(1);
+          setSearchTerm("");
         }}
         onSearchChange={(term) => {
           setSearchTerm(term);

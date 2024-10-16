@@ -32,7 +32,12 @@ export function usePokemon() {
         setLoading(true);
         try {
           const results = await searchPokemon(term);
-          setPokemon(results);
+          const startIndex =
+          (pagination.currentPage - 1) * pagination.itemsPerPage;
+          const endIndex = startIndex + pagination.itemsPerPage;
+          const paginatedResults = results.slice(startIndex, endIndex);
+          console.log("results===", results.length, startIndex, endIndex)
+          setPokemon(paginatedResults);
           setPagination((prev) => ({
             ...prev,
             totalItems: results.length,
@@ -45,7 +50,7 @@ export function usePokemon() {
         }
       }
     }, 1000),
-    []
+    [pagination.currentPage]
   );
 
   // Load initial data
